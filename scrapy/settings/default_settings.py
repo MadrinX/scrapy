@@ -17,9 +17,9 @@ import sys
 from importlib import import_module
 from os.path import join, abspath, dirname
 
-import six
-
 AJAXCRAWL_ENABLED = False
+
+ASYNCIO_REACTOR = False
 
 AUTOTHROTTLE_ENABLED = False
 AUTOTHROTTLE_DEBUG = False
@@ -60,6 +60,7 @@ DEPTH_PRIORITY = 0
 
 DNSCACHE_ENABLED = True
 DNSCACHE_SIZE = 10000
+DNS_RESOLVER = 'scrapy.resolver.CachingThreadedResolver'
 DNS_TIMEOUT = 60
 
 DOWNLOAD_DELAY = 0
@@ -86,8 +87,8 @@ DOWNLOADER = 'scrapy.core.downloader.Downloader'
 DOWNLOADER_HTTPCLIENTFACTORY = 'scrapy.core.downloader.webclient.ScrapyHTTPClientFactory'
 DOWNLOADER_CLIENTCONTEXTFACTORY = 'scrapy.core.downloader.contextfactory.ScrapyClientContextFactory'
 DOWNLOADER_CLIENT_TLS_CIPHERS = 'DEFAULT'
-DOWNLOADER_CLIENT_TLS_METHOD = 'TLS' # Use highest TLS/SSL protocol version supported by the platform,
-                                     # also allowing negotiation
+# Use highest TLS/SSL protocol version supported by the platform, also allowing negotiation:
+DOWNLOADER_CLIENT_TLS_METHOD = 'TLS'
 DOWNLOADER_CLIENT_TLS_VERBOSE_LOGGING = False
 
 DOWNLOADER_MIDDLEWARES = {}
@@ -179,7 +180,7 @@ HTTPCACHE_ALWAYS_STORE = False
 HTTPCACHE_IGNORE_HTTP_CODES = []
 HTTPCACHE_IGNORE_SCHEMES = ['file']
 HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS = []
-HTTPCACHE_DBM_MODULE = 'anydbm' if six.PY2 else 'dbm'
+HTTPCACHE_DBM_MODULE = 'dbm'
 HTTPCACHE_POLICY = 'scrapy.extensions.httpcache.DummyPolicy'
 HTTPCACHE_GZIP = False
 
@@ -246,13 +247,15 @@ RETRY_HTTP_CODES = [500, 502, 503, 504, 522, 524, 408, 429]
 RETRY_PRIORITY_ADJUST = -1
 
 ROBOTSTXT_OBEY = False
-ROBOTSTXT_PARSER = 'scrapy.robotstxt.PythonRobotParser'
+ROBOTSTXT_PARSER = 'scrapy.robotstxt.ProtegoRobotParser'
 ROBOTSTXT_USER_AGENT = None
 
 SCHEDULER = 'scrapy.core.scheduler.Scheduler'
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleLifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.LifoMemoryQueue'
 SCHEDULER_PRIORITY_QUEUE = 'scrapy.pqueues.ScrapyPriorityQueue'
+
+SCRAPER_SLOT_MAX_ACTIVE_SIZE = 5000000
 
 SPIDER_LOADER_CLASS = 'scrapy.spiderloader.SpiderLoader'
 SPIDER_LOADER_WARN_ONLY = False
